@@ -25,7 +25,7 @@ In questo laboratorio verranno i container Docker verranno trattati come nodi ge
     ```
 2. Controlla il file `hosts/inventory.ini` e aggiorna gli indirizzi IP e le porte dei nodi Docker se necessario:
     ```ini
-    [php_nodes]
+    [ubuntu_nodes]
     node1 ansible_host=<docker_node_1_ip> ansible_port=<docker_node_1_ssh_port> ansible_user=root ansible_password=rootpass ansible_python_interpreter=/usr/bin/python3
     node2 ansible_host=<docker_node_2_ip> ansible_port=<docker_node_2_ssh_port> ansible_user=root ansible_password=rootpass ansible_python_interpreter=/usr/bin/python3
     ```

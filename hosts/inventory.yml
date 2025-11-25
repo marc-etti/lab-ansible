@@ -1,6 +1,6 @@
 all:
   children:
-    php_nodes:
+    ubuntu_nodes:
       hosts:
         node1:
           ansible_host: node1

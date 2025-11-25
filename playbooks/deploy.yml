@@ -1,6 +1,6 @@
 ---
 - name: Deploy PHP Application on Docker Nodes
-  hosts: php_nodes
+  hosts: ubuntu_nodes
   become: yes
 
   vars:

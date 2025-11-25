@@ -1,0 +1,75 @@
+---
+- name: Installare Asciiquarium su Ubuntu
+  hosts: ubuntu_nodes
+  become: yes
+
+  vars:
+    term_animation_url: "http://search.cpan.org/CPAN/authors/id/K/KB/KBAUCOM/Term-Animation-2.6.tar.gz"
+    asciiquarium_url: "https://robobunny.com/projects/asciiquarium/asciiquarium.tar.gz"
+    temp_dir: "/tmp/asciiquarium_install"
+
+  tasks:
+
+    - name: Creare directory temporanea
+      file:
+        path: "{{ temp_dir }}"
+        state: directory
+        mode: "0755"
+    
+    - name: Installare dipendenze necessarie
+      apt:
+        name:
+          - libcurses-perl
+          - make
+        state: present
+        update_cache: yes
+
+    - name: Scaricare Term-Animation
+      get_url:
+        url: "{{ term_animation_url }}"
+        dest: "{{ temp_dir }}/Term-Animation-2.6.tar.gz"
+
+    - name: Estrarre Term-Animation
+      unarchive:
+        src: "{{ temp_dir }}/Term-Animation-2.6.tar.gz"
+        dest: "{{ temp_dir }}"
+        remote_src: yes
+
+    - name: Installare Term-Animation
+      command: perl Makefile.PL
+      args:
+        chdir: "{{ temp_dir }}/Term-Animation-2.6"
+    
+    - name: Compilare Term-Animation
+      command: make
+      args:
+        chdir: "{{ temp_dir }}/Term-Animation-2.6"
+
+    - name: Test Term-Animation
+      command: make test
+      args:
+        chdir: "{{ temp_dir }}/Term-Animation-2.6"
+
+    - name: Installare Term-Animation
+      command: make install
+      args:
+        chdir: "{{ temp_dir }}/Term-Animation-2.6"
+
+    - name: Scaricare Asciiquarium
+      get_url:
+        url: "{{ asciiquarium_url }}"
+        dest: "{{ temp_dir }}/asciiquarium.tar.gz"
+
+    - name: Estrarre Asciiquarium
+      unarchive:
+        src: "{{ temp_dir }}/asciiquarium.tar.gz"
+        dest: "{{ temp_dir }}"
+        remote_src: yes
+
+    - name: Copiare asciiquarium in /usr/local/bin
+      shell: cp {{ temp_dir }}/asciiquarium_1.1/asciiquarium /usr/local/bin/asciiquarium
+
+    - name: Rendere eseguibile asciiquarium
+      file:
+        path: /usr/local/bin/asciiquarium
+        mode: "0755"
