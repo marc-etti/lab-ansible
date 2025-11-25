@@ -1,0 +1,45 @@
+---
+- name: Deploy PHP Application on Docker Nodes
+  hosts: php_nodes
+  become: yes
+
+  vars:
+    app_directory: /var/www/todo-app
+    php_port: 8080
+
+  tasks:
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install PHP and required extensions
+      apt:
+        name:
+          - php
+          - php-sqlite3
+        state: present
+
+    - name: Ensure application directory exists
+      file:
+        path: "{{ app_directory }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Start PHP built-in server
+      shell: |
+        nohup php -S 0.0.0.0:{{ php_port }} -t {{ app_directory }} > /var/log/php_server.log 2>&1 &
+      args:
+        executable: /bin/bash
+
+    - name: Verify PHP server is running
+      shell: "ps aux | grep 'php -S 0.0.0.0:{{ php_port }}'"
+      register: php_server_process
+      ignore_errors: yes
+
+    - name: Debug PHP server process
+      debug:
+        msg: "PHP server is running with process info: {{ php_server_process.stdout }}"

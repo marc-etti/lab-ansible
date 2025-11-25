@@ -1,0 +1,35 @@
+---
+- name: Aggiorna sistema nel container Docker Ubuntu
+  hosts: ssh_hosts
+  become: yes
+  gather_facts: yes
+
+  tasks:
+
+    - name: Aggiorna la cache APT
+    # Equivalente a: apt update
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Esegui l'upgrade dei pacchetti
+    # Equivalente a: apt upgrade -y
+      ansible.builtin.apt:
+        upgrade: yes
+
+    - name: Rimuovi pacchetti non più necessari (autoremove)
+      ansible.builtin.apt:
+        autoremove: yes
+
+    - name: Pulisci la cache inutile (autoclean)
+      ansible.builtin.apt:
+        autoclean: yes
+
+    - name: Mostra i pacchetti ancora aggiornabili (se ci sono)
+      ansible.builtin.shell: "apt list --upgradable || true"
+      register: upgradable
+      changed_when: false
+
+    - name: Output pacchetti aggiornabili
+      ansible.builtin.debug:
+        var: upgradable.stdout_lines
