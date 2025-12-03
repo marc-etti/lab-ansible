@@ -1,0 +1,47 @@
+---
+- name: Install MariaDB server
+  apt:
+    name:
+      - mariadb-server
+      - python3-pymysql
+    state: present
+    update_cache: yes
+
+- name: Ensure MariaDB is running
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Secure MariaDB installation (root password, remove test db)
+  mysql_user:
+    login_user: root
+    login_password: ""
+    user: root
+    password: "rootpass"
+    host_all: yes
+  ignore_errors: yes
+
+- name: Create database
+  mysql_db:
+    name: webappdb
+    state: present
+    login_user: root
+    login_password: "rootpass"
+
+- name: Create user for the webapp
+  mysql_user:
+    name: webuser
+    password: webpass
+    priv: "webappdb.*:ALL"
+    host: "%"
+    state: present
+    login_user: root
+    login_password: "rootpass"
+
+- name: Insert example data
+  mysql_query:
+    login_user: root
+    login_password: "rootpass"
+    db: webappdb
+    query: "CREATE TABLE IF NOT EXISTS messages (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255)); INSERT INTO messages(text) VALUES ('Hello from MariaDB!');"

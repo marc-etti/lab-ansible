@@ -1,0 +1,12 @@
+---
+- name: Deploy MariaDB on database_node (node2)
+  hosts: database_node
+  become: yes
+  roles:
+    - database
+
+- name: Deploy webapp on webapp_node (node1)
+  hosts: webapp_node
+  become: yes
+  roles:
+    - webapp

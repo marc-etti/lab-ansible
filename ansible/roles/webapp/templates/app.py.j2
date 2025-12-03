@@ -1,0 +1,26 @@
+from flask import Flask
+import sqlite3
+import subprocess
+import os
+
+DB_REMOTE = "root@node2:/opt/mydb/data.db"
+DB_LOCAL = "/opt/webapp/data.db"
+
+# Copia il DB a ogni avvio (semplice dimostrazione)
+subprocess.run(["scp", "-o", "StrictHostKeyChecking=no", DB_REMOTE, DB_LOCAL])
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    conn = sqlite3.connect(DB_LOCAL)
+    cursor = conn.cursor()
+    cursor.execute("SELECT text FROM messages")
+    data = cursor.fetchall()
+    conn.close()
+
+    lines = "<br>".join([row[0] for row in data])
+    return f"<h1>Contenuto del Database:</h1><p>{lines}</p>"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80)
