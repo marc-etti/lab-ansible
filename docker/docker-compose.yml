@@ -6,6 +6,7 @@ services:
     container_name: node1
     ports:
       - "2222:22"       # espone ssh sulla porta 2222 del tuo computer
+      - "80:80"        # espone il server web Apache sulla porta 80 del tuo computer
       - "8080:8080"     # espone il server PHP sulla porta 8080 del tuo computer
     privileged: false
 
@@ -25,8 +26,7 @@ services:
       dockerfile: controller/Dockerfile
     container_name: ansible_controller
     volumes:
-      - ./playbooks:/etc/ansible/playbooks                # monta la cartella dei playbook
-      - ./hosts:/etc/ansible/hosts                        # monta la cartella dell'inventory
+      - ../ansible:/etc/ansible:ro    # monta la cartella ansible come read-only
     privileged: false
 # Note:
 # comando da eseguire nel controller: ansible-playbook -i /etc/ansible/hosts/inventory.ini /etc/ansible/playbooks/deploy.yml

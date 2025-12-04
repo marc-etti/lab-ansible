@@ -29,6 +29,7 @@
     name: "{{ db_user }}"
     password: "{{ db_password }}"
     priv: "{{ db_name }}.*:ALL"
+    host: "%"
     state: present
     login_user: root
     login_password: "{{ db_root_password }}"
@@ -49,3 +50,17 @@
     login_user: root
     login_password: "{{ db_root_password }}"
     login_unix_socket: /run/mysqld/mysqld.sock
+
+# Configurare MariaDB per connessioni remote
+- name: Configurare MariaDB per connessioni remote
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    state: present
+    backup: yes
+
+- name: Riavviare MariaDB
+  service:
+    name: mariadb
+    state: restarted  

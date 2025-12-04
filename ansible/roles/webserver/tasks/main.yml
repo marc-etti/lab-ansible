@@ -57,7 +57,12 @@
   args:
     removes: /etc/apache2/sites-enabled/000-default.conf
 
-- name: Abilitare sito myapp
+- name: Rimuovere la pagina di default di Apache se esiste
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
+- name: Abilitare il sito myapp
   command: a2ensite myapp.conf
   args:
     creates: /etc/apache2/sites-enabled/myapp.conf
