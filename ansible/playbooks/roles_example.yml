@@ -1,12 +1,17 @@
 ---
-- name: Deploy MariaDB on database_node (node2)
-  hosts: database_node
-  become: yes
-  roles:
-    - database
+- name: Deploy applicazione PHP + MariaDB con ruoli
+  hosts: all
+  become: true
 
-- name: Deploy webapp on webapp_node (node1)
-  hosts: webapp_node
-  become: yes
+  vars:
+    db_host: "node2"
+    db_name: "mydb"
+    db_user: "dbuser"
+    db_password: "password"
+    db_root_password: "rootpassword"
+    php_version: "8.3"
+    app_root: "/var/www/html"
+
   roles:
-    - webapp
+    - { role: database, when: "'database_node' in group_names" }
+    - { role: webserver, when: "'webserver_node' in group_names" }

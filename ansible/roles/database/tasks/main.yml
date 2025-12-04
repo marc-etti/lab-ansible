@@ -1,5 +1,6 @@
 ---
-- name: Install MariaDB server
+# Installazione MariaDB e dipendenze
+- name: Installare MariaDB e PyMySQL
   apt:
     name:
       - mariadb-server
@@ -7,41 +8,44 @@
     state: present
     update_cache: yes
 
-- name: Ensure MariaDB is running
+- name: Avviare MariaDB
   service:
     name: mariadb
     state: started
     enabled: yes
 
-- name: Secure MariaDB installation (root password, remove test db)
-  mysql_user:
-    login_user: root
-    login_password: ""
-    user: root
-    password: "rootpass"
-    host_all: yes
-  ignore_errors: yes
-
-- name: Create database
+# Creazione DB
+- name: Creare database
   mysql_db:
-    name: webappdb
+    name: "{{ db_name }}"
     state: present
     login_user: root
-    login_password: "rootpass"
+    login_password: "{{ db_root_password }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
 
-- name: Create user for the webapp
+# Creazione utente
+- name: Creare utente MySQL
   mysql_user:
-    name: webuser
-    password: webpass
-    priv: "webappdb.*:ALL"
-    host: "%"
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: "{{ db_name }}.*:ALL"
     state: present
     login_user: root
-    login_password: "rootpass"
+    login_password: "{{ db_root_password }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
 
-- name: Insert example data
-  mysql_query:
+# Template init.sql
+- name: Generare init-db.sql
+  template:
+    src: init-db.sql.j2
+    dest: /init.sql
+
+# Import SQL
+- name: Importare struttura iniziale DB
+  mysql_db:
+    name: "{{ db_name }}"
+    state: import
+    target: /init.sql
     login_user: root
-    login_password: "rootpass"
-    db: webappdb
-    query: "CREATE TABLE IF NOT EXISTS messages (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255)); INSERT INTO messages(text) VALUES ('Hello from MariaDB!');"
+    login_password: "{{ db_root_password }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
