@@ -28,5 +28,6 @@ services:
     volumes:
       - ../ansible:/etc/ansible:ro    # monta la cartella ansible come read-only
     privileged: false
+
 # Note:
 # comando da eseguire nel controller: ansible-playbook -i /etc/ansible/hosts/inventory.ini /etc/ansible/playbooks/deploy.yml
