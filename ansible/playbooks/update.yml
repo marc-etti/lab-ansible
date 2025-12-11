@@ -1,6 +1,6 @@
 ---
 - name: Aggiorna sistema nel container Docker Ubuntu
-  hosts: ssh_hosts
+  hosts: ubuntu_nodes
   become: yes
   gather_facts: yes
 

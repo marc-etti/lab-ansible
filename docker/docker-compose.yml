@@ -6,7 +6,7 @@ services:
     container_name: node1
     ports:
       - "2222:22"       # espone ssh sulla porta 2222 del tuo computer
-      - "80:80"        # espone il server web Apache sulla porta 80 del tuo computer
+      - "80:80"         # espone il server web Apache sulla porta 80 del tuo computer
       - "8080:8080"     # espone il server PHP sulla porta 8080 del tuo computer
     privileged: false
 

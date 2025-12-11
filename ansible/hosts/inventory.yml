@@ -1,3 +1,5 @@
+# Inventory per nodi Ubuntu in formato YAML
+---
 all:
   children:
     ubuntu_nodes:
@@ -8,6 +10,7 @@ all:
           ansible_user: root
           ansible_password: rootpass
           ansible_python_interpreter: /usr/bin/python3
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 
         node2:
           ansible_host: node2
@@ -15,3 +18,12 @@ all:
           ansible_user: root
           ansible_password: rootpass
           ansible_python_interpreter: /usr/bin/python3
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+# Gruppi di nodi specifici per ruoli
+    webserver_node:
+      hosts:
+        node1:
+    database_node:
+      hosts:
+        node2:
