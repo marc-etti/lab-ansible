@@ -24,7 +24,7 @@ EXPOSE 22
 EXPOSE 8080
 
 # Copia la cartella dell'app todo-app nella directory web server
-COPY ./resources/todo-app /var/www/todo-app
+# COPY ./resources/todo-app /var/www/todo-app
 
 # Avvia SSHD in foreground (necessario in Docker)
 CMD ["/usr/sbin/sshd", "-D"]

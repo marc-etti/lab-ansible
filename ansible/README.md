@@ -31,9 +31,9 @@ ansible --version
     - `template_example.yml`: Esempio di playbook che utilizza un template Jinja2.
     - `roles_example.yml`: Esempio di playbook che utilizza ruoli Ansible.
     - `asciiquarium.yml`: Esempio di playbook per installare e configurare Asciiquarium.
-- `roles/`: Contiene i ruoli Ansible per organizzare le configurazioni e le attività.
-    - `webserver/`: Esempio di ruolo per configurare un server web.
-    - `database/`: Esempio di ruolo per configurare un database.
+    - `roles/`: Contiene i ruoli Ansible per organizzare le configurazioni e le attività.
+        - `webserver/`: Esempio di ruolo per configurare un server web.
+        - `database/`: Esempio di ruolo per configurare un database.
 - `templates/`: Contiene i file di template Jinja2 utilizzati nei playbook
     - `template_example.j2`: Esempio di file di template Jinja2.
 - `ansible.cfg`: File di configurazione di Ansible.

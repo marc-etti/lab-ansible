@@ -20,6 +20,14 @@
           - php
           - php-sqlite3
         state: present
+      
+    - name: copy todo app files
+      copy:
+        src: ./resources/todo-app/
+        dest: "{{ app_directory }}"
+        owner: www-data
+        group: www-data
+        mode: '0755'
 
     - name: Ensure application directory exists
       file:
