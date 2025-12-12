@@ -1,0 +1,36 @@
+---
+- name: Esempio didattico di template Jinja2 con Ansible
+  hosts: ubuntu_nodes
+  gather_facts: yes
+  become: yes
+
+  vars:
+    custom_message: "Questo file è stato creato usando Jinja2!"
+    packages:
+      - vim
+      - curl
+      - htop
+
+  tasks:
+
+    - name: Installazione pacchetti per l'esempio
+      apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+
+    - name: Genera un file dal template Jinja2
+      template:
+        src: ../templates/template_example.j2
+        dest: /tmp/template_output.txt
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Mostra il contenuto del file generato
+      command: cat /tmp/template_output.txt
+      register: template_content
+
+    - name: Output del file
+      debug:
+        msg: "{{ template_content.stdout }}"

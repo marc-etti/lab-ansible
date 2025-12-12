@@ -22,9 +22,19 @@ ansible --version
 ```
 
 ## Struttura della directory ansible
-- `inventory/`: Contiene i file di inventario Ansible per definire i nodi gestiti.
+- `hosts/`: Contiene i file di inventario Ansible per definire i nodi gestiti.
+    - `inventory.ini`: Esempio di file di inventario in formato INI.
+    - `inventory.yml`: Esempio di file di inventario in formato YAML.
 - `playbooks/`: Contiene i playbook Ansible per automatizzare le attività sui nodi.
+    - `update_system.yml`: Esempio di playbook per aggiornare i sistemi gestiti.
+    - `deploy_todoApp.yml`: Esempio di playbook per distribuire un'applicazione Todo.
+    - `role_example.yml`: Esempio di playbook che utilizza ruoli Ansible.
+    - `asciiquarium.yml`: Esempio di playbook per installare e configurare Asciiquarium.
 - `roles/`: Contiene i ruoli Ansible per organizzare le configurazioni e le attività.
+    - `webserver/`: Esempio di ruolo per configurare un server web.
+    - `database/`: Esempio di ruolo per configurare un database.
+- `templates/`: Contiene i file di template Jinja2 utilizzati nei playbook
+    - `template_example.j2`: Esempio di file di template Jinja2.
 - `ansible.cfg`: File di configurazione di Ansible.
 - `README.md`: Questo file di istruzioni.
 
@@ -32,12 +42,12 @@ ansible --version
 1. **Verificare la connettività con i nodi**:
 Dal terminale, navigare nella directory `ansible/` e eseguire:
    ```bash
-   ansible all -m ping -i inventory/<nome_file_inventario>
+   ansible all -m ping -i hosts/<nome_file_inventario>
    ```
 2. **Eseguire un playbook**:
    Per eseguire un playbook Ansible, utilizzare il comando:
    ```bash
-   ansible-playbook -i inventory/<nome_file_inventario> playbooks/<nome_playbook>.yml
+   ansible-playbook -i hosts/<nome_file_inventario> playbooks/<nome_playbook>.yml
    ``` 
 3. **Utilizzare i ruoli Ansible**:
    Per eseguire un playbook che utilizza ruoli, utilizzare lo stesso comando di cui sopra, assicurandosi che il playbook faccia riferimento ai ruoli presenti nella directory `roles/`.

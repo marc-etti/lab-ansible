@@ -1,0 +1,20 @@
+# File generato automaticamente da Ansible
+# Host: {{ inventory_hostname }}
+# Data generazione: {{ ansible_date_time.date }}
+
+Benvenuto nel template Jinja2!
+
+Il tuo hostname è: {{ ansible_hostname }}
+Il sistema operativo è: {{ ansible_distribution }} {{ ansible_distribution_version }}
+
+{% if custom_message %}
+Messaggio personalizzato:
+  "{{ custom_message }}"
+{% else %}
+Nessun messaggio personalizzato definito.
+{% endif %}
+
+Lista pacchetti installati da Ansible:
+{% for pkg in packages %}
+  - {{ pkg }}
+{% endfor %}
