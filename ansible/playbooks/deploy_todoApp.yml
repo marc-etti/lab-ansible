@@ -21,7 +21,7 @@
           - php-sqlite3
         state: present
       
-    - name: copy todo app files
+    - name: Copy todo app files
       copy:
         src: ./resources/todo-app/
         dest: "{{ app_directory }}"

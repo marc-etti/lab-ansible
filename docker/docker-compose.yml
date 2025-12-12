@@ -20,14 +20,17 @@ services:
       - "8081:8080"     # espone il server PHP sulla porta 8081 del tuo computer
     privileged: false
 
-  controller:
-    build: 
-      context: .
-      dockerfile: controller/Dockerfile
-    container_name: ansible_controller
-    volumes:
-      - ../ansible:/etc/ansible:ro    # monta la cartella ansible come read-only
-    privileged: false
+
+# Controller Ansible in container Docker (opzionale)
+#
+#  controller:
+#    build: 
+#      context: .
+#      dockerfile: controller/Dockerfile
+#    container_name: ansible_controller
+#    volumes:
+#      - ../ansible:/etc/ansible:ro    # monta la cartella ansible come read-only
+#    privileged: false
 
 # Note:
 # comando da eseguire nel controller: ansible-playbook -i /etc/ansible/hosts/inventory.ini /etc/ansible/playbooks/deploy.yml
