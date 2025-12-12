@@ -31,7 +31,7 @@ In questo laboratorio verranno i container Docker verranno trattati come nodi ge
 
 2. Clonare il repository del laboratorio:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/marc-etti/lab-ansible
     ```
 3. Navigare nella directory del laboratorio:
     ```bash

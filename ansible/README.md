@@ -28,7 +28,8 @@ ansible --version
 - `playbooks/`: Contiene i playbook Ansible per automatizzare le attività sui nodi.
     - `update_system.yml`: Esempio di playbook per aggiornare i sistemi gestiti.
     - `deploy_todoApp.yml`: Esempio di playbook per distribuire un'applicazione Todo.
-    - `role_example.yml`: Esempio di playbook che utilizza ruoli Ansible.
+    - `template_example.yml`: Esempio di playbook che utilizza un template Jinja2.
+    - `roles_example.yml`: Esempio di playbook che utilizza ruoli Ansible.
     - `asciiquarium.yml`: Esempio di playbook per installare e configurare Asciiquarium.
 - `roles/`: Contiene i ruoli Ansible per organizzare le configurazioni e le attività.
     - `webserver/`: Esempio di ruolo per configurare un server web.
@@ -42,7 +43,7 @@ ansible --version
 1. **Verificare la connettività con i nodi**: <br>
    Dal terminale, navigare nella directory `ansible/` e eseguire:
    ```bash
-   ansible all -m ping -i hosts/<nome_file_inventario>
+   ansible all -m ping -i hosts/inventory.ini
    ```
    L'output dovrebbe mostrare che tutti i nodi gestiti rispondono correttamente e sarà del tipo:
    ```json
@@ -59,7 +60,7 @@ ansible --version
 2. **Eseguire un playbook**: <br>
    Per eseguire un playbook Ansible, utilizzare il comando:
    ```bash
-   ansible-playbook -i hosts/<nome_file_inventario> playbooks/<nome_playbook>.yml
+   ansible-playbook -i hosts/inventory.ini playbooks/<nome_playbook>.yml
    ```
    e seguire l'esecuzione del playbook attraverso l'output nel terminale.
 
