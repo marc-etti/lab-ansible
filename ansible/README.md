@@ -39,17 +39,31 @@ ansible --version
 - `README.md`: Questo file di istruzioni.
 
 ## Comandi da eseguire
-1. **Verificare la connettività con i nodi**:
-Dal terminale, navigare nella directory `ansible/` e eseguire:
+1. **Verificare la connettività con i nodi**: <br>
+   Dal terminale, navigare nella directory `ansible/` e eseguire:
    ```bash
    ansible all -m ping -i hosts/<nome_file_inventario>
    ```
-2. **Eseguire un playbook**:
+   L'output dovrebbe mostrare che tutti i nodi gestiti rispondono correttamente e sarà del tipo:
+   ```json
+    node1 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    node2 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    ```
+
+2. **Eseguire un playbook**: <br>
    Per eseguire un playbook Ansible, utilizzare il comando:
    ```bash
    ansible-playbook -i hosts/<nome_file_inventario> playbooks/<nome_playbook>.yml
-   ``` 
-3. **Utilizzare i ruoli Ansible**:
+   ```
+   e seguire l'esecuzione del playbook attraverso l'output nel terminale.
+
+3. **Utilizzare i ruoli Ansible**: <br>
    Per eseguire un playbook che utilizza ruoli, utilizzare lo stesso comando di cui sopra, assicurandosi che il playbook faccia riferimento ai ruoli presenti nella directory `roles/`.
 
 ## Esercizi suggeriti
@@ -58,9 +72,14 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
 1. Creare un playbook per creare un file di testo su tutti i nodi gestiti.
    - Obbiettivo: Verificare che il controller riesca a scrivere sui nodi gestiti.
    - Moduli suggeriti: `file`, `copy`.
+   - Links alla documentazione: 
+     - [file module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/file_module.html)
+     - [copy module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html)
 2. Creare un playbook per creare un utente su tutti i nodi gestiti.
     - Obbiettivo: Verificare la gestione degli utenti sui nodi gestiti.
     - Moduli suggeriti: `user`.
+    - Links alla documentazione: 
+      - [user module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/user_module.html)
 3. Creare un playbook per cambiare la password di un utente su tutti i nodi gestiti.
     - Obbiettivo: Verificare la gestione delle password sui nodi gestiti.
     - Moduli suggeriti: `user`.
@@ -69,6 +88,8 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
     - Obbiettivo: Familiarizzare con la gestione dei pacchetti tramite Ansible.
     - Moduli suggeriti: `apt` (per sistemi basati su Debian/Ubuntu)
     - Esempio: Installare `nginx` e `curl` su tutti i nodi gestiti.
+    - Links alla documentazione:
+      - [apt module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html)
 5. Creare un playbook per avviare, arrestare e riavviare un servizio su tutti i nodi gestiti.
     - Obbiettivo: Gestire i servizi sui nodi gestiti.
     - Moduli suggeriti: `service`.
@@ -76,6 +97,8 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
         - Avviare il servizio: `state: started`
         - Arrestare il servizio: `state: stopped`
         - Riavviare il servizio: `state: restarted`
+    - Links alla documentazione:
+      - [service module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/service_module.html)
 
 ## Ulteriori esercizi avanzati
 6. Copiare una directory intera su tutti i nodi gestiti.
@@ -83,11 +106,19 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
 
 7. Utilizzare un template Jinja2
     - Creare un file `.j2` nella directory `templates/`.
-    - Utilizzare il modulo `template`
+    - Utilizzare il modulo `template` per copiare il file template sui nodi gestiti, sostituendo le variabili definite.
+    - Esempio: Creare un file di configurazione personalizzato per un'applicazione.
+    - Links alla documentazione:
+      - [template module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/template_module.html)
+      - [Jinja2 templating](https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_templating.html)
 
 8. Eseguire un comando e salvare l'output
     - Usa il modulo `command` o `shell`.
     - Registra l'output con `register` e visualizzalo con il modulo `debug`.
+    - Links alla documentazione:
+      - [command module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/command_module.html)
+      - [shell module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/shell_module.html)
+      - [debug module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/debug_module.html)
 
 9. Creare un playbook con più "play" separati. Ad esempio:
     - `Play 1`: Aggiornare i pacchetti sui nodi gestiti.
@@ -97,4 +128,6 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
     - Obbiettivo: Familiarizzare con la creazione e l'uso dei ruoli in Ansible.
     - Strutturare il ruolo con le directory standard (`tasks/`, `handlers/`, `templates/`, `files/`, ecc.).
     - Utilizzare il ruolo in un playbook.
+    - Links alla documentazione:
+      - [Ansible Roles](https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
 
