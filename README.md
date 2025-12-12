@@ -5,54 +5,44 @@ Questo laboratorio ha lo scopo di fornire un esempio pratico di utilizzo di Ansi
 In questo laboratorio verranno i container Docker verranno trattati come nodi gestiti da Ansible tramite connesseione SSH.
 
 ## Prerequisiti
-- Ansible installato 
-- Docker installato 
-- Accesso SSH ai nodi Docker
+- **Ansible installato** <br>
+    Verificabile attraverso il comando:
+    ```bash
+    ansible --version
+    ```
+- **Docker installato** <br>
+    Verificabile attraverso il comando:
+    ```bash
+    docker --version
+    ```
+- **Accesso SSH ai nodi Docker** <br>
+    Assicurarsi che il controller Ansible possa connettersi ai nodi Docker tramite SSH senza password (utilizzando chiavi SSH).
 
 ## Struttura del progetto
-- `hosts/inventory.ini`: File di inventario Ansible che elenca i nodi Docker.
-- `playbooks/deploy.yml`: Playbook Ansible per deployare un'app nel container Docker.
-- `node/Dockerfile`: File Dockerfile per creare l'immagine del nodo Docker.
-- `controller/Dockerfile`: File Dockerfile per creare l'immagine del controller Ansible
-- `docker-compose.yml`: File Docker Compose per definire e gestire i servizi Docker.
-- `todo-app/`: Directory contenente il codice sorgente dell'applicazione PHP da eseguire nel container Docker.
+- `ansible/`: Directory contenente i playbook Ansible, i file di inventario e le configurazioni.
+    - Link al [README di Ansible](ansible/README.md) per ulteriori dettagli.
+- `docker/`: Directory contenente i file Docker Compose per avviare i container Docker necessari per il laboratorio.
+    - Link al [README di Docker](docker/README.md) per ulteriori dettagli.
+- `README.md`: Questo file di istruzioni.
+- `.gitignore`: File per escludere file e directory non necessari dal controllo di versione.
 
 ## Esecuzione del laboratorio
-1. Clona il repository del laboratorio:
+1. Aprire un terminale all' interno della directory dove si vuole clonare il repository del laboratorio.
+
+2. Clonare il repository del laboratorio:
     ```bash
     git clone <repository-url>
-    cd <repository-directory>
     ```
-2. Controlla il file `hosts/inventory.ini` e aggiorna gli indirizzi IP e le porte dei nodi Docker se necessario:
-    ```ini
-    [ubuntu_nodes]
-    node1 ansible_host=<docker_node_1_ip> ansible_port=<docker_node_1_ssh_port> ansible_user=root ansible_password=rootpass ansible_python_interpreter=/usr/bin/python3
-    node2 ansible_host=<docker_node_2_ip> ansible_port=<docker_node_2_ssh_port> ansible_user=root ansible_password=rootpass ansible_python_interpreter=/usr/bin/python3
-    ```
-3. Avvia i container Docker utilizzando Docker Compose:
+3. Navigare nella directory del laboratorio:
     ```bash
-    docker compose up -d --build
+    cd lab-ansible/
     ```
-4. Entra nel container del controller Ansible:
+4. Avviare i container Docker necessari per il laboratorio. Maggiori dettagli sono disponibili in `docker/README.md`.
     ```bash
-    docker exec -it ansible_controller bash
+    docker compose -f docker/docker-compose.yml up -d --build --force-recreate
     ```
-5. Esegui il playbook Ansible per distribuire i container Docker:
-    ```bash
-    ansible-playbook -i hosts/inventory.ini playbooks/deploy.yml
-    ```
-6. Accesso all'applicazione PHP tramite il browser web utilizzando l'indirizzo IP del nodo Docker e la porta 8080:
-    ```
-    http://localhost:8080 (per il nodo1)
-    http://localhost:8081 (per il nodo2)
-    ```
-7. Arresta i container Docker al termine del laboratorio:
+4. Passare alle istruzione del laboratorio Ansible in `ansible/README.md` per eseguire i playbook Ansible sui nodi Docker.
+5. Terminato il laboratorio, arrestare i container Docker. Aprire il terminale all'interno della directory `docker/`, ed eseguire:
     ```bash
     docker compose down
     ```
-
-## Contenuto dei Playbook
-`deploy.yml`:
-- Aggiorna i pacchetti sul nodo con apt.(apt update && apt upgrade -y)
-- Controlla e installa PHP e le estensioni necessarie. (php, php-sqlite3)
-- Avvia il server PHP integrato per eseguire l'applicazione. (php -S localhost:8080)
