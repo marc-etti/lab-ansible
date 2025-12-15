@@ -40,32 +40,96 @@ ansible --version
 - `README.md`: Questo file di istruzioni.
 
 ## Comandi da eseguire
-1. **Verificare la connettività con i nodi**: <br>
-   Dal terminale, navigare nella directory `ansible/` e eseguire:
-   ```bash
-   ansible all -m ping -i hosts/inventory.ini
+- **Verificare la connettività con i nodi**: <br>
+  Dal terminale, navigare nella directory `ansible/` e eseguire:
+  ```bash
+  ansible all -m ping -i hosts/inventory.ini
+  ```
+  L'output dovrebbe mostrare che tutti i nodi gestiti rispondono correttamente e sarà del tipo:
+  ```json
+   node1 | SUCCESS => {
+       "changed": false,
+       "ping": "pong"
+   }
+   node2 | SUCCESS => {
+       "changed": false,
+       "ping": "pong"
+   }
    ```
-   L'output dovrebbe mostrare che tutti i nodi gestiti rispondono correttamente e sarà del tipo:
-   ```json
-    node1 | SUCCESS => {
-        "changed": false,
-        "ping": "pong"
-    }
-    node2 | SUCCESS => {
-        "changed": false,
-        "ping": "pong"
-    }
+- **Eseguire un playbook**: <br>
+  Per eseguire un playbook Ansible, utilizzare il comando:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/<nome_playbook>.yml
+  ```
+  e seguire l'esecuzione del playbook attraverso l'output nel terminale.
+
+## Esempi
+- **Esempio 1**: `update_system.yml` <br>
+  Eseguire il playbook per aggiornare i sistemi gestiti:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/update_system.yml
+  ```
+- **Scenario 2**: `deploy_todoApp.yml` <br>
+  Eseguire il playbook per distribuire l'applicazione Todo:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/deploy_todoApp.yml
+  ```
+  All'interno della macchina virtuale, aprire un browser e navigare verso:
+  - `http://localhost:8080/` per accedere all'applicazione Todo eseguita sul nodo1.
+  - `http://localhost:8081/` per accedere all'applicazione Todo eseguita sul nodo2.
+
+- **Esempio 3**: `template_example.yml` <br>
+  Eseguire il playbook che utilizza un template Jinja2:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/template_example.yml
+  ```
+  Aprire un secondo terminale ed entrare nel nodo 1 con il comando:
+  ```bash
+  docker exec -ti node1 bash
+  ```
+  Una volta entrati visualizzare il file generato con il template jinja2 con il comando:
+  ```bash
+  cat /tmp/template_output.txt
+  ```
+- **Esempio 4**: `roles_example.yml` <br>
+  Eseguire il playbook che utilizza ruoli Ansible:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/roles_example.yml
+  ```
+  Notare la struttura dell'albero delle directory all'interno della cartella `playbooks/roles/`.
+  ```
+    ansible
+    ├── hosts/inventory.ini
+    └── playbooks
+        ├── roles_example.yml
+        └── roles
+            ├── database                        # Ruolo per il database
+            │   ├── tasks                       # Directory per i task del ruolo
+            │   │   └── main.yml                # File principale dei task
+            │   └── templates                   # Directory per i template del ruolo
+            │       └── init-db.sql.j2          # Template SQL per l'inizializzazione del database
+            └── webserver                       # Ruolo per il server web
+                ├── files                       # Directory per i file statici del ruolo    
+                │   └── index.php               # File PHP per il server web
+                ├── tasks                       # Directory per i task del ruolo
+                │   └── main.yml                # File principale dei task
+                └── templates                   # Directory per i template del ruolo
+                    └── index.php.j2            # Template PHP per il server web
     ```
-
-2. **Eseguire un playbook**: <br>
-   Per eseguire un playbook Ansible, utilizzare il comando:
-   ```bash
-   ansible-playbook -i hosts/inventory.ini playbooks/<nome_playbook>.yml
-   ```
-   e seguire l'esecuzione del playbook attraverso l'output nel terminale.
-
-3. **Utilizzare i ruoli Ansible**: <br>
-   Per eseguire un playbook che utilizza ruoli, utilizzare lo stesso comando di cui sopra, assicurandosi che il playbook faccia riferimento ai ruoli presenti nella directory `roles/`.
+- **Esempio 5**: `asciiquarium.yml` <br>
+  Eseguire il playbook per installare e configurare Asciiquarium:
+  ```bash
+  ansible-playbook -i hosts/inventory.ini playbooks/asciiquarium.yml
+  ```
+  Una volta completata l'esecuzione del playbook, entrare nel nodo1 con il comando:
+  ```bash
+  docker exec -ti node1 bash
+  ```
+  All'interno del nodo1, eseguire il comando:
+  ```bash
+  asciiquarium
+  ```
+  Per uscire dall'animazione di Asciiquarium, premere `CTRL + C`.
 
 ## Esercizi suggeriti
 Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con moduli e playbook di Ansible:
