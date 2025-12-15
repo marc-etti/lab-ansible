@@ -116,6 +116,8 @@ ansible --version
                 └── templates                   # Directory per i template del ruolo
                     └── index.php.j2            # Template PHP per il server web
     ```
+  All'interno della macchina virtuale, aprire un browser e navigare verso:
+  - `http://localhost:80/` per accedere al webserver eseguito sul nodo1.
 - **Esempio 5**: `asciiquarium.yml` <br>
   Eseguire il playbook per installare e configurare Asciiquarium:
   ```bash
@@ -147,6 +149,7 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
       - [user module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/user_module.html)
 3. Creare un playbook per cambiare la password di un utente su tutti i nodi gestiti.
     - Obbiettivo: Verificare la gestione delle password sui nodi gestiti.
+    - Installare la libreria `python3-passlib` sull'host Ansible se non è già presente con: `sudo apt install python3-passlib`.
     - Moduli suggeriti: `user`.
     - Suggerimento: Utilizzare il filtro `password_hash` per generare una password crittografata.
 4. Creare un playbook per installare un pacchetto software su tutti i nodi gestiti.
@@ -162,6 +165,11 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
         - Avviare il servizio: `state: started`
         - Arrestare il servizio: `state: stopped`
         - Riavviare il servizio: `state: restarted`
+    - N.B. Se è ancora in esecuzione apache2, riavviare i nodi per liberare la porta 80, dopodiché rieseguire il playbook che installa e gestisce nginx prima di eseguire questo esercizio.
+    - Per riavviare i nodi, aprire il terminale nella cartella `ansible/docker/` ed eseguire:
+      ```
+      docker compose down && docker compose up -d
+      ```
     - Links alla documentazione:
       - [service module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/service_module.html)
 
