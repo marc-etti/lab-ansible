@@ -137,29 +137,29 @@ ansible --version
 Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con moduli e playbook di Ansible:
 
 1. Creare un playbook per creare un file di testo su tutti i nodi gestiti.
-   - Obbiettivo: Verificare che il controller riesca a scrivere sui nodi gestiti.
+   - Obiettivo: Verificare che il controller riesca a scrivere sui nodi gestiti.
    - Moduli suggeriti: `file`, `copy`.
    - Links alla documentazione: 
      - [file module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/file_module.html)
      - [copy module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html)
 2. Creare un playbook per creare un utente su tutti i nodi gestiti.
-    - Obbiettivo: Verificare la gestione degli utenti sui nodi gestiti.
+    - Obiettivo: Verificare la gestione degli utenti sui nodi gestiti.
     - Moduli suggeriti: `user`.
     - Links alla documentazione: 
       - [user module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/user_module.html)
 3. Creare un playbook per cambiare la password di un utente su tutti i nodi gestiti.
-    - Obbiettivo: Verificare la gestione delle password sui nodi gestiti.
+    - Obiettivo: Verificare la gestione delle password sui nodi gestiti.
     - Installare la libreria `python3-passlib` sull'host Ansible se non è già presente con: `sudo apt install python3-passlib`.
     - Moduli suggeriti: `user`.
     - Suggerimento: Utilizzare il filtro `password_hash` per generare una password crittografata.
 4. Creare un playbook per installare un pacchetto software su tutti i nodi gestiti.
-    - Obbiettivo: Familiarizzare con la gestione dei pacchetti tramite Ansible.
+    - Obiettivo: Familiarizzare con la gestione dei pacchetti tramite Ansible.
     - Moduli suggeriti: `apt` (per sistemi basati su Debian/Ubuntu)
     - Esempio: Installare `nginx` e `curl` su tutti i nodi gestiti.
     - Links alla documentazione:
       - [apt module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html)
 5. Creare un playbook per avviare, arrestare e riavviare un servizio su tutti i nodi gestiti.
-    - Obbiettivo: Gestire i servizi sui nodi gestiti.
+    - Obiettivo: Gestire i servizi sui nodi gestiti.
     - Moduli suggeriti: `service`.
     - Esempio con `nginx`: 
         - Avviare il servizio: `state: started`
@@ -198,7 +198,7 @@ Di seguito sono riportati alcuni esercizi suggeriti per familiarizzare con modul
     - `Play 2`: Installare un'applicazione specifica.
 
 10. Creare un ruolo Ansible personalizzato
-    - Obbiettivo: Familiarizzare con la creazione e l'uso dei ruoli in Ansible.
+    - Obiettivo: Familiarizzare con la creazione e l'uso dei ruoli in Ansible.
     - Strutturare il ruolo con le directory standard (`tasks/`, `handlers/`, `templates/`, `files/`, ecc.).
     - Utilizzare il ruolo in un playbook.
     - Links alla documentazione:
