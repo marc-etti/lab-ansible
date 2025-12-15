@@ -69,7 +69,7 @@ ansible --version
   ```bash
   ansible-playbook -i hosts/inventory.ini playbooks/update_system.yml
   ```
-- **Scenario 2**: `deploy_todoApp.yml` <br>
+- **Esempio 2**: `deploy_todoApp.yml` <br>
   Eseguire il playbook per distribuire l'applicazione Todo:
   ```bash
   ansible-playbook -i hosts/inventory.ini playbooks/deploy_todoApp.yml
